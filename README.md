@@ -1,5 +1,5 @@
 
-The project is done by 5 members: Abdulrahman Ramadan, Jakob Ryttergaard Poulsen, Cristina Ailoaei, Roza Hasso, Teakosheen Joulak
+The project is done by 5 members: Abdulrahman Ramadan, Cristina Ailoaei, Jakob Ryttergaard Poulsen,  Roza Hasso, Teakosheen Joulak
 
 1. Dataset: Cats and Dogs image classification: https://www.kaggle.com/datasets/samuelcortinhas/cats-and-dogs-image-classification
 which consists of 697 files/images of cats and dogs.
