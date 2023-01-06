@@ -18,13 +18,14 @@ def evaluate(model_checkpoint, batch_size):
     model.load_state_dict(state_dict)
 
     running_loss = 0
-    for images,labels in test_set:
-        images = images.view(images.shape[0],-1)
-        output = model(images)
-        loss = criterion(output,labels)
-        running_loss += loss.item()
-        ps = torch.exp(model(images))
-        top_p, top_class = ps.topk(1, dim=1)
+    with torch.no_grad():
+        for images,labels in test_set:
+            images = images.view(images.shape[0],-1)
+            output = model(images)
+            loss = criterion(output,labels)
+            running_loss += loss.item()
+            ps = torch.exp(model(images))
+            top_p, top_class = ps.topk(1, dim=1)
         
     equals = top_class == labels.view(*top_class.shape)
     accuracy = torch.mean(equals.type(torch.FloatTensor))        
