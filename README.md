@@ -15,7 +15,7 @@ The tentative project plan is to use the following tools
 
 
 ## Code structure and versioning
--  for a structured repository template
+- Cookiecutter for a structured repository template
 - Git for version control of code
 - DVC for version control of data
 
