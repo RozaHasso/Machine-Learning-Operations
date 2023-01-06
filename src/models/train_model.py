@@ -4,27 +4,35 @@ import torch
 import matplotlib.pyplot as plt
 import argparse
 
-def train(lr,epochs,batch_size, optimizer):
+import hydra
+from omegaconf import OmegaConf
+import logging
+
+log = logging.getLogger(__name__)
+
+@hydra.main(config_path="config", config_name='default_config.yaml')
+def train(config):
     print("Training day and night")
-    print(lr)
-    print(epochs)
+    print(f"configuration: \n {OmegaConf.to_yaml(config)}")
+    hparams = config.experiment
+    torch.manual_seed(hparams["seed"])
 
     model = CNN()
     train_set = torch.load("data/processed/train_dataset")
-    train_set = torch.DataLoader(train_set, batch_size = batch_size)
+    train_set = torch.DataLoader(train_set, batch_size = hparams["batch_size"])
 
-    if optimizer == "Adam":
+    if hparams["optimizer"] == "Adam":
         optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-    elif optimizer == "SGD":
+    elif hparams["optimizer"] == "SGD":
         optimizer = torch.optim.SGD(model.parameters(), lr=lr)
-    elif optimizer == "Adagrad":
+    elif hparams["optimizer"] == "Adagrad":
         optimizer = torch.optim.Adagrad(model.parameters(), lr=lr)
     
     criterion = torch.nn.CrossEntropyLoss()
 
     losses = []
-    for e in range(epochs):
-        print("Epoch: {}/{}".format(e+1,epochs))
+    for e in range(hparams["epochs"]):
+        log.info("Epoch: {}/{}".format(e+1,hparams["epochs"]))
         running_loss = 0
         for images,labels in train_set:
             images = images.view(images.shape[0], -1)
@@ -35,17 +43,11 @@ def train(lr,epochs,batch_size, optimizer):
             optimizer.step()
             running_loss += loss.item() 
         else:
-            print(f"Training loss: {running_loss/len(train_set)}")
+            log.info(f"Training loss: {running_loss/len(train_set)}")
             losses.append(running_loss)
-    plt.plot(list(range(epochs)),losses)
+    plt.plot(list(range(hparams["epochs"])),losses)
     plt.savefig("/reports/figures/training_curve.png")
     torch.save(model.state_dict(), 'trained_model.pth')
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--lr", help="learning rate", default=1e-4)
-    parser.add_argument("--e", type=int, help="Number of epochs to train for", default=5)
-    parser.add_argument("--bs", type=int, help="Batch size for training loader", default=16)
-    parser.add_argument("--o", type=str, help="Optimizer", default="SGD")
-    args = parser.parse_args() 
-    train(args.lr, args.e, args.bs, args.o)
+    train()
