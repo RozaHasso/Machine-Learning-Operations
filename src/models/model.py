@@ -5,7 +5,7 @@ class CNN(torch.nn.Module):
         super().__init__()
         self.model = torch.nn.Sequential(
             #Input = 3 x 32 x 32, Output = 32 x 32 x 32
-            torch.nn.Conv2d(in_channels = 3, out_channels = 32, kernel_size = 3, padding = 1),
+            torch.nn.Conv2d(in_channels = 1, out_channels = 32, kernel_size = 3, padding = 1),
             torch.nn.ReLU(),
             #Input = 32 x 32 x 32, Output = 32 x 16 x 16
             torch.nn.MaxPool2d(kernel_size=2),
