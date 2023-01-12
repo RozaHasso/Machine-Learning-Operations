@@ -62,8 +62,10 @@ class DataModel():
                             shutil.copyfile(data_sub_dir_path+'/' +
                                             d_name+'/'+f_name, dst_type_dir+f_name)
 
-    def get_dataloader(self):
-        return torchvision.datasets.ImageFolder("./data/processed", transform =  transforms.Compose([transforms.Grayscale(), transforms.ToTensor()]))
+    def get_train_dataset(self):
+        return torchvision.datasets.ImageFolder("./data/processed/train", transform =  transforms.Compose([transforms.Grayscale(), transforms.ToTensor()]))
+    def get_test_dataset(self):
+        return torchvision.datasets.ImageFolder("./data/processed/test", transform =  transforms.Compose([transforms.Grayscale(), transforms.ToTensor()]))
 
 
 @click.command()
