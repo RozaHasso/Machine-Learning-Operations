@@ -9,7 +9,16 @@ on:
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: ${{matrix.os}}
+
+    strategy: 
+        matrix: 
+          os: [ubuntu-latest, windows-latest]
+          
+
+
+    
+    
              
     
 
