@@ -38,7 +38,7 @@ def train(lr,epochs,batch_size, optimizer):
             losses.append(loss)
         else:
             print(f"Training loss: {running_loss}")
-    torch.save(model.state_dict(), 'trained_model.pth')
+    torch.save(model.state_dict(), 'models/trained_model.pth')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
