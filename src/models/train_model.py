@@ -1,5 +1,7 @@
 from model import CNN
 import torch
+from torch.utils.data import DataLoader
+import numpy as np
 
 import matplotlib.pyplot as plt
 import argparse
@@ -11,7 +13,7 @@ def train(lr,epochs,batch_size, optimizer):
 
     model = CNN()
     train_set = torch.load("data/processed/train_dataset")
-    train_set = torch.DataLoader(train_set, batch_size = batch_size)
+    train_set = DataLoader(train_set, batch_size = batch_size)
 
     if optimizer == "Adam":
         optimizer = torch.optim.Adam(model.parameters(), lr=lr)
@@ -27,18 +29,15 @@ def train(lr,epochs,batch_size, optimizer):
         print("Epoch: {}/{}".format(e+1,epochs))
         running_loss = 0
         for images,labels in train_set:
-            images = images.view(images.shape[0], -1)
             optimizer.zero_grad()
             output = model(images)
             loss = criterion(output,labels)
             loss.backward()
             optimizer.step()
-            running_loss += loss.item() 
+            running_loss += loss.item()
+            losses.append(loss)
         else:
-            print(f"Training loss: {running_loss/len(train_set)}")
-            losses.append(running_loss)
-    plt.plot(list(range(epochs)),losses)
-    plt.savefig("/reports/figures/training_curve.png")
+            print(f"Training loss: {running_loss}")
     torch.save(model.state_dict(), 'trained_model.pth')
 
 if __name__ == "__main__":

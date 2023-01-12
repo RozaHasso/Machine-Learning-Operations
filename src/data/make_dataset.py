@@ -1,72 +1,21 @@
 # -*- coding: utf-8 -*-
 import logging
 import os
-import shutil
+import torch
 import torchvision
 from torchvision import transforms
 
 import click
 
 
-class DataModel():
-    def __init__(self, input_filepath: str, output_filepath) -> None:
-        self.work_dir = os.getcwd()
-        self.input_filepath = input_filepath
-        self.output_filepath = output_filepath
-        self.create_dirs()
-        self.restructure_data()
-
-    def create_dirs(self):
-        try:
-            os.mkdir(self.output_filepath)
-        except:
-            None
-        try:
-            os.mkdir(f"{self.output_filepath}/train")
-        except:
-            None
-        try:
-            os.mkdir(f"{self.output_filepath}/test")
-        except:
-            None
-        try:
-            os.mkdir(f"{self.output_filepath}/train/cat")
-        except:
-            None
-        try:
-            os.mkdir(f"{self.output_filepath}/train/dog")
-        except:
-            None
-        try:
-            os.mkdir(f"{self.output_filepath}/test/dog")
-        except:
-            None
-        try:
-            os.mkdir(f"{self.output_filepath}/test/cat")
-        except:
-            None
-
-    def restructure_data(self):
-        self.create_dirs()
-        dst_parent_dir = self.input_filepath+"/processed"
-        data_dir_list = os.listdir(self.input_filepath)
-        for data_dir in data_dir_list:
-            if data_dir == 'train' or data_dir == 'test':
-                data_sub_dir_path = self.input_filepath + "/" + data_dir
-                data_file_list = os.listdir(data_sub_dir_path)
-                for d_name in data_file_list:
-                    if d_name == 'cats' or d_name == 'dogs':
-                        for f_name in os.listdir(data_sub_dir_path + '/' + d_name):
-                            category = 'cat' if d_name == 'cats' else 'dog'
-                            dst_type_dir = f"{self.output_filepath}/{data_dir}/{category}/"
-                            shutil.copyfile(data_sub_dir_path+'/' +
-                                            d_name+'/'+f_name, dst_type_dir+f_name)
-
-    def get_train_dataset(self):
-        return torchvision.datasets.ImageFolder("./data/processed/train", transform =  transforms.Compose([transforms.Grayscale(), transforms.ToTensor()]))
-    def get_test_dataset(self):
-        return torchvision.datasets.ImageFolder("./data/processed/test", transform =  transforms.Compose([transforms.Grayscale(), transforms.ToTensor()]))
-
+def process_data(input_filepath, output_filepath):
+    train_set = torchvision.datasets.ImageFolder("./data/raw/train", transform =  transforms.Compose(
+                                                [transforms.Grayscale(), transforms.Resize((32,32)), transforms.ToTensor()])
+                                                )
+    test_set = torchvision.datasets.ImageFolder("./data/raw/test", transform =  transforms.Compose(
+                                                [transforms.Grayscale(), transforms.Resize((32,32)), transforms.ToTensor()])
+                                                )
+    return train_set, test_set
 
 @click.command()
 @click.argument("input_filepath", type=click.Path(exists=True))
@@ -77,8 +26,10 @@ def main(input_filepath: str, output_filepath: str) -> None:
     """
     logger = logging.getLogger(__name__)
     logger.info("making final data set from raw data")
-    # restructure_data(input_filepath, output_filepath)
-
+    train_set, test_set = process_data(input_filepath, output_filepath)
+    torch.save(train_set, os.path.join(output_filepath,"train_dataset"))
+    torch.save(test_set, os.path.join(output_filepath,"test_dataset"))
+    
 
 if __name__ == "__main__":
     log_fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
