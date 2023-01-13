@@ -3,9 +3,10 @@ import torch
 class CNN(torch.nn.Module):
     def __init__(self):
         super().__init__()
+        torch.manual_seed(123)
         self.model = torch.nn.Sequential(
             #Input = 3 x 32 x 32, Output = 32 x 32 x 32
-            torch.nn.Conv2d(in_channels = 1, out_channels = 32, kernel_size = 3, padding = 1),
+            torch.nn.Conv2d(in_channels = 3, out_channels = 32, kernel_size = 3, padding = 1),
             torch.nn.ReLU(),
             #Input = 32 x 32 x 32, Output = 32 x 16 x 16
             torch.nn.MaxPool2d(kernel_size=2),
@@ -25,7 +26,8 @@ class CNN(torch.nn.Module):
             torch.nn.Flatten(),
             torch.nn.Linear(64*4*4, 512),
             torch.nn.ReLU(),
-            torch.nn.Linear(512, 2)
+            torch.nn.Linear(512, 2),
+            torch.nn.LogSoftmax(dim=1)
         )
 
     def forward(self, x):

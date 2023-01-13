@@ -10,10 +10,12 @@ import click
 
 def process_data(input_filepath, output_filepath):
     train_set = torchvision.datasets.ImageFolder("./data/raw/train", transform =  transforms.Compose(
-                                                [transforms.Grayscale(), transforms.Resize((32,32)), transforms.ToTensor()])
+                                                [transforms.Resize((32,32)), transforms.ToTensor(),
+                                                transforms.Normalize(mean=[0.5,0.5,0.5], std=[0.5,0.5,0.5])])
                                                 )
     test_set = torchvision.datasets.ImageFolder("./data/raw/test", transform =  transforms.Compose(
-                                                [transforms.Grayscale(), transforms.Resize((32,32)), transforms.ToTensor()])
+                                                [transforms.Resize((32,32)), transforms.ToTensor(),
+                                                transforms.Normalize(mean=[0.5,0.5,0.5], std=[0.5,0.5,0.5])])
                                                 )
     return train_set, test_set
 
