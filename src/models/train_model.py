@@ -1,4 +1,6 @@
 from model import CNN
+from predict_model import evaluate
+
 import torch
 from torch.utils.data import DataLoader
 import numpy as np
@@ -8,12 +10,12 @@ import argparse
 
 def train(lr,epochs,batch_size, optimizer):
     print("Training day and night")
-    print(lr)
-    print(epochs)
+    print("learning rate: ", lr)
+    print("Training for {} epochs".format(epochs))
 
     model = CNN()
     train_set = torch.load("data/processed/train_dataset")
-    train_set = DataLoader(train_set, batch_size = batch_size)
+    train_set = DataLoader(train_set, batch_size = batch_size, shuffle=True)
 
     if optimizer == "Adam":
         optimizer = torch.optim.Adam(model.parameters(), lr=lr)
@@ -24,7 +26,6 @@ def train(lr,epochs,batch_size, optimizer):
     
     criterion = torch.nn.CrossEntropyLoss()
 
-    losses = []
     for e in range(epochs):
         print("Epoch: {}/{}".format(e+1,epochs))
         running_loss = 0
@@ -35,16 +36,16 @@ def train(lr,epochs,batch_size, optimizer):
             loss.backward()
             optimizer.step()
             running_loss += loss.item()
-            losses.append(loss)
         else:
-            print(f"Training loss: {running_loss}")
+            accuracy, eval_loss = evaluate(model, batch_size)
+            print(f"Training loss: {running_loss/len(train_set)}, Accuracy: {accuracy}%, Val loss: {eval_loss}")
     torch.save(model.state_dict(), 'models/trained_model.pth')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--lr", help="learning rate", default=1e-4)
-    parser.add_argument("--e", type=int, help="Number of epochs to train for", default=5)
+    parser.add_argument("--lr", help="learning rate", default=1e-10)
+    parser.add_argument("--e", type=int, help="Number of epochs to train for", default=20)
     parser.add_argument("--bs", type=int, help="Batch size for training loader", default=16)
-    parser.add_argument("--o", type=str, help="Optimizer", default="SGD")
+    parser.add_argument("--o", type=str, help="Optimizer", default="Adam")
     args = parser.parse_args() 
     train(args.lr, args.e, args.bs, args.o)
