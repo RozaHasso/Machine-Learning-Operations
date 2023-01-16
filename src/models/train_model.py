@@ -1,19 +1,19 @@
-from model import CNN
+from model import init_model
 from predict_model import evaluate
 
 import torch
 from torch.utils.data import DataLoader
-import numpy as np
 
-import matplotlib.pyplot as plt
+
 import argparse
 
-def train(lr,epochs,batch_size, optimizer):
+def train(lr,epochs,batch_size, optimizer, pretrain=False):
     print("Training day and night")
     print("learning rate: ", lr)
     print("Training for {} epochs".format(epochs))
 
-    model = CNN()
+    model = init_model(pretrain=pretrain)
+
     train_set = torch.load("data/processed/train_dataset")
     train_set = DataLoader(train_set, batch_size = batch_size, shuffle=True)
 
@@ -43,9 +43,10 @@ def train(lr,epochs,batch_size, optimizer):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--lr", help="learning rate", default=1e-10)
+    parser.add_argument("--lr", help="learning rate", default=1e-4)
     parser.add_argument("--e", type=int, help="Number of epochs to train for", default=20)
     parser.add_argument("--bs", type=int, help="Batch size for training loader", default=16)
     parser.add_argument("--o", type=str, help="Optimizer", default="Adam")
+    parser.add_argument("--pt", type=str, help="Initialize pretrained model", default=True)
     args = parser.parse_args() 
-    train(args.lr, args.e, args.bs, args.o)
+    train(args.lr, args.e, args.bs, args.o, args.pt)
