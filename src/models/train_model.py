@@ -43,7 +43,7 @@ def train(lr,epochs,batch_size, optimizer, pretrain=False):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--lr", help="learning rate", default=1e-10)
+    parser.add_argument("--lr", help="learning rate", default=1e-4)
     parser.add_argument("--e", type=int, help="Number of epochs to train for", default=20)
     parser.add_argument("--bs", type=int, help="Batch size for training loader", default=16)
     parser.add_argument("--o", type=str, help="Optimizer", default="Adam")

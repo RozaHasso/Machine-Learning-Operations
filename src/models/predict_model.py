@@ -1,4 +1,4 @@
-from model import CNN
+from model import init_model
 
 import argparse
 import torch
@@ -29,7 +29,7 @@ if __name__ == "__main__":
     parser.add_argument("--m", help="Path to model checkpoint")
     parser.add_argument("--bs", type=int, help="Batch size for training loader", default=16)
     args = parser.parse_args()
-    model = CNN()
+    model = init_model()
     state_dict = torch.load(args.m)
     model.load_state_dict(state_dict)
     evaluate(model, args.bs)
