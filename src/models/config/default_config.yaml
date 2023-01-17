@@ -1,0 +1,2 @@
+defaults:
+    - experiment: pretrained_ResNet50/exp1

@@ -12,16 +12,17 @@ log = logging.getLogger(__name__)
 
 @hydra.main(config_path="config", config_name='default_config.yaml')
 def train(config):
+    hparams = config.experiment
     print("Training day and night")
     print("learning rate: ", hparams["lr"])
     print("Training for {} epochs".format(hparams["epochs"]))
     print(f"configuration: \n {OmegaConf.to_yaml(config)}")
-    hparams = config.experiment
     torch.manual_seed(hparams["seed"])
 
     train_set = torch.load("data/processed/train_dataset")
     train_set = torch.DataLoader(train_set, batch_size = hparams["batch_size"], shuffle=True)
 
+    model = init_model(pretrain=hparams["pretrain"])
 
     if hparams["optimizer"] == "Adam":
         optimizer = torch.optim.Adam(model.parameters(), lr=lr)
