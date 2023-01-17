@@ -1,0 +1,9 @@
+# @package _group_
+dataset_path: '~/datasets'
+
+pretrain: False
+optimizer: "Adam"
+batch_size: 16
+lr: 1e-10
+epochs: 20
+seed: 123
