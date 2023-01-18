@@ -1,4 +1,5 @@
 from model import init_model
+from src.data.make_dataset import ImgDataset
 
 import argparse
 import torch
@@ -7,14 +8,17 @@ from torch.utils.data import DataLoader
 
 def evaluate(model, batch_size):
     print("Evaluating until hitting the ceiling")
-    test_set = torch.load("data/processed/test_dataset")
-    test_set = DataLoader(test_set, batch_size = batch_size, shuffle=True)
+    # test_set = torch.load("data/processed/test_dataset")
+    # test_set = DataLoader(test_set, batch_size = batch_size, shuffle=True)
+    test_set = ImgDataset(train=False,input_filepath= "./data/raw", output_filepath="./data/processed")
+    dataloader = torch.utils.data.DataLoader(test_set, batch_size=batch_size)
+
     criterion = torch.nn.CrossEntropyLoss()
 
     running_loss = 0
     with torch.no_grad():
         accuracy = 0
-        for images,labels in test_set:
+        for images,labels in dataloader:
             output = model(images)
             loss = criterion(output,labels)
             running_loss += loss.item()
