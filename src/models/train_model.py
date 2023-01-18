@@ -4,7 +4,7 @@ from predict_model import evaluate
 import torch
 from torch.utils.data import DataLoader
 import wandb
-
+from src.data.make_dataset import ImgDataset
 import argparse
 
 def train(lr,epochs,batch_size, optimizer, pretrain=False, wandb_api=None):
@@ -16,10 +16,12 @@ def train(lr,epochs,batch_size, optimizer, pretrain=False, wandb_api=None):
     model = init_model(pretrain=pretrain)
     
     
-    train_set = torch.load("data/processed/train_dataset")
-    train_set = DataLoader(train_set, batch_size = batch_size, shuffle=True)
+    # train_set = torch.load("data/processed/train_dataset")
+    train_set = ImgDataset(True, "./data/raw", "./data/processed")
+    # train_set = DataLoader(train_set, batch_size = batch_size, shuffle=True)
+    dataloader = torch.utils.data.DataLoader(train_set, batch_size=batch_size)
 
-    if wand_api is not None:
+    if wandb_api is not None:
         wandb.watch(model, log_freq=100)
         wandb.log({"Pretrained model:": pretrain,
                     "Optimizer:": optimizer,
@@ -39,7 +41,7 @@ def train(lr,epochs,batch_size, optimizer, pretrain=False, wandb_api=None):
     for e in range(epochs):
         print("Epoch: {}/{}".format(e+1,epochs))
         running_loss = 0
-        for batch_idx, (images,labels) in enumerate(train_set):
+        for images,labels in dataloader:
             optimizer.zero_grad()
             output = model(images)
             loss = criterion(output,labels)
@@ -65,7 +67,7 @@ if __name__ == "__main__":
     parser.add_argument("-e", type=int, help="Number of epochs to train for", default=5)
     parser.add_argument("-bs", type=int, help="Batch size for training loader", default=16)
     parser.add_argument("-o", type=str, help="Optimizer", default="Adam")
-    parser.add_argument("-pt", type=str, help="Initialize pretrained model", default=True)
+    parser.add_argument("-pt", type=str, help="Initialize pretrained model", default=False)
     parser.add_argument("-wandb", type=str, help="API key for logging into wandb", default=None)
     args = parser.parse_args()
     if args.wandb is not None:
