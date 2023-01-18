@@ -1,0 +1,5 @@
+steps:
+   - name: 'gcr.io/cloud-builders/docker'
+     args: ['build', '-t', 'gcr.io/vast-flight-374515/myimage', '.']
+   - name: 'gcr.io/cloud-builders/docker'
+     args: ['push', 'gcr.io/vast-flight-374515/myimage']
