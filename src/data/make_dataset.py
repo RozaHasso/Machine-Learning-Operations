@@ -35,7 +35,7 @@ class ImgDataset(Dataset):
         dogs_filelist = os.listdir(dogs_dir_path)
         data=[]
         targets=[]
-        image_size=(224,224)
+        image_size=(28,28)
         for fname in cats_filelist:
             gray_img= rgb2gray(imageio.imread(f"{cats_dir_path}/{fname}"))
             img = resize(gray_img, output_shape=image_size, mode='reflect', anti_aliasing=True)
@@ -67,8 +67,6 @@ class ImgDataset(Dataset):
         try:
             self.data, self.targets = torch.load(
                 f"{self.output_filepath}/{split}_processed.pt")
-            print(self.data.shape)
-            print(self.targets.shape)
         except:
             raise ValueError("No preprocessed files found")
     

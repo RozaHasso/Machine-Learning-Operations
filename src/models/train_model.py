@@ -18,6 +18,7 @@ def train(lr,epochs,batch_size, optimizer, pretrain=False, wandb_api=None):
     
     # train_set = torch.load("data/processed/train_dataset")
     train_set = ImgDataset(True, "./data/raw", "./data/processed")
+    print(len(train_set))
     # train_set = DataLoader(train_set, batch_size = batch_size, shuffle=True)
     dataloader = torch.utils.data.DataLoader(train_set, batch_size=batch_size)
 
@@ -65,7 +66,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-lr", help="learning rate", default=1e-4)
     parser.add_argument("-e", type=int, help="Number of epochs to train for", default=5)
-    parser.add_argument("-bs", type=int, help="Batch size for training loader", default=16)
+    parser.add_argument("-bs", type=int, help="Batch size for training loader", default=128)
     parser.add_argument("-o", type=str, help="Optimizer", default="Adam")
     parser.add_argument("-pt", type=str, help="Initialize pretrained model", default=False)
     parser.add_argument("-wandb", type=str, help="API key for logging into wandb", default=None)

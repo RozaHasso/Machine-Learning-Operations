@@ -10,28 +10,30 @@ def init_model(pretrain=False):
         for param in model.parameters():
             param.requires_grad = False   
 
-        # model.fc = nn.Sequential(
-        #     nn.Linear(2048, 128),
-        #     nn.ReLU(inplace=True),
-        #     nn.Linear(128, 2)).to(device)
+        model.fc = nn.Sequential(
+            nn.Linear(2048, 128),
+            nn.ReLU(inplace=True),
+            nn.Linear(128, 2)).to(device)
     else:
         class CNN(torch.nn.Module):
             def __init__(self):
-                    super().__init__()
-                    self.backbone = nn.Sequential(
-                        nn.Conv2d(1, 64, 3),  # [N, 64, 26]
-                        nn.LeakyReLU(),
-                        nn.Conv2d(64, 32, 3),  # [N, 32, 24]
-                        nn.LeakyReLU(),
-                        nn.Conv2d(32, 16, 3),  # [N, 16, 22]
-                        nn.LeakyReLU(),
-                        nn.Conv2d(16, 8, 3),  # [N, 8, 20]
-                        nn.LeakyReLU(),
-                    )
+                super().__init__()
+                self.backbone = nn.Sequential(
+                    nn.Conv2d(1, 16, 3),  # [N, 64, 26]
+                    nn.LeakyReLU(),
+                    nn.Conv2d(16, 32, 3),  # [N, 32, 24]
+                    nn.LeakyReLU(),
+                    nn.Conv2d(32, 64, 3),  # [N, 16, 22]
+                    nn.LeakyReLU(),
+                    nn.Conv2d(64, 128, 3),  # [N, 8, 20]
+                    nn.LeakyReLU(),
+                    nn.Conv2d(128, 256, 3),  # [N, 8, 18]
+                    nn.LeakyReLU(),
+                )
 
-                    self.classifier = nn.Sequential(
-                        nn.Flatten(), nn.Linear(8 * 20 * 20, 128), nn.Dropout(), nn.Linear(128, 10)
-                    )
+                self.classifier = nn.Sequential(
+                    nn.Flatten(), nn.Linear(256 * 18 * 18, 128), nn.Dropout(), nn.Linear(128, 10)
+                )
 
 
             def forward(self, x: Tensor) -> Tensor:
@@ -41,6 +43,6 @@ def init_model(pretrain=False):
                 Returns:
                     log_probs: tensor with log probabilities with shape [N, 10]
                 """
-                return self.classifier(self.backbone(x))
+                return self.classifier(self.backbone(x))        
         model = CNN()
     return model
