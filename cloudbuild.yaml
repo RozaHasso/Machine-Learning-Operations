@@ -1,5 +1,5 @@
 steps:
    - name: 'gcr.io/cloud-builders/docker'
-     args: ['build', 'f', 'trainer.dockerfile', '-t', 'gcr.io/vast-flight-374515/trainer', '.']
+     args: ['build', '-f', 'trainer.dockerfile', '-t', 'gcr.io/vast-flight-374515/trainer', '.']
    - name: 'gcr.io/cloud-builders/docker'
      args: ['push', 'gcr.io/vast-flight-374515/trainer']
