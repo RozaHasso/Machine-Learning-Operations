@@ -1,3 +1,4 @@
+
 steps:
    - name: 'gcr.io/cloud-builders/docker'
      args: ['build', '-f', 'testing.dockerfile', '-t', 'gcr.io/dtumlops-375114/testing', '.']
