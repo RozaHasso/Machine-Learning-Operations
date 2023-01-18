@@ -1,5 +1,7 @@
 steps:
    - name: 'gcr.io/cloud-builders/docker'
-     args: ['build', '-f', 'standardenvironment.dockerfile', '-t', 'gcr.io/vast-flight-374515/standardenvironment', '.']
+     args: ['build', '-f', 'trainer.dockerfile', '-t', 'gcr.io/vast-flight-374515/trainer', '.']
    - name: 'gcr.io/cloud-builders/docker'
-     args: ['push', 'gcr.io/vast-flight-374515/standardenvironment']
+     args: ['push', 'gcr.io/vast-flight-374515/trainer']
+   - name: 'gcr.io/cloud-builders/gcloud'
+     args: ['ai', 'custom-jobs', 'create', '--region=europe-west1', '--display-name=train-model-job', '--config=vertex-config.yaml']
