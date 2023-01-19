@@ -4,3 +4,5 @@ steps:
      args: ['build', '-f', 'trainer.dockerfile', '-t', 'gcr.io/dtumlops-375114/trainer', '.']
    - name: 'gcr.io/cloud-builders/docker'
      args: ['push', 'gcr.io/dtumlops-375114/trainer']
+   - name: 'gcr.io/cloud-builders/gcloud'
+     args: ['ai', 'custom-jobs', 'create', '--region=europe-west1', '--display-name=train-model-job', '--config=vertex.yaml']
