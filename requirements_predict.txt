@@ -1,0 +1,7 @@
+torch
+torchvision
+fastapi
+pydantic
+uvicorn
+python-multipart
+google-cloud-storage
