@@ -14,14 +14,6 @@ jobs:
     strategy: 
         matrix: 
           os: [ubuntu-latest, windows-latest]
-          
-
-
-    
-    
-             
-    
-
     steps:
     - name: Checkouts
       uses: actions/checkout@v2
