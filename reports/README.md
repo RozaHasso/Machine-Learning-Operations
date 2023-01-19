@@ -192,7 +192,18 @@ We used dvc to be able to pull the data from another storage than GitHub. We use
 >
 > Answer:
 
---- question 11 fill here ---
+[17:34] Teakosheen Joulak
+Continuous Integration (CI) in GitHub allows developers to automatically build, test, and deploy code changes as soon as they are pushed to a GitHub repository. GitHub Actions is a popular CI/CD tool that can be used to automate this process. Developers can create workflows in YAML to define the steps for building, testing, and deploying their code. These workflows can be triggered by events such as push, pull request, or schedule. With GitHub Actions, developers can also integrate other tools such as Docker and Kubernetes for containerization and deployment. Additionally, you can use GitHub's built-in integrations with other CI/CD tools such as Travis CI and CircleCI. Overall, CI in GitHub allows for streamlined collaboration and automation in the development process.
+
+[17:59] Roza Ibrahim Hasso
+For continuous integration we are running unit testing in pytest framework which allows us to automatically build, test and deploy code changes as soon as they are pushed to a GitHub repository.
+This can be done through GitHub actions, which is a popular CI/CD tool that can be used to automate this process. A workflow was created through a yml file, to define the steps of building, testing and deploying. These workflows can be triggered by push and pull requests in our project.
+We have applied this workflow to be run on the main and the testing branch.
+In addition to that Python version 3.8 was selected.
+We used two different operating systems (windows and WSL Ubuntu).
+ 
+Then when a push or a pull request is executed, the GitHUb workflow can be seen on the online GitHub repository. Here is a link to our GitHub workflow on a branch called "testing"
+https://github.com/RozaHasso/Machine-Learning-Operations/actions
 
 ## Running code and tracking experiments
 
