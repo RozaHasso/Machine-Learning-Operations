@@ -1,0 +1,1 @@
+{"columns": ["Pretrained model:", "Optimizer:", "Batch size:", "Learning Rate:", "Epochs:"], "data": [[true, "Adam", 16, 0.0001, 5]]}

@@ -5,3 +5,7 @@ torchvision==0.14.1
 wandb
 dvc
 dvc[gdrive]
+fastapi
+pydantic
+uvicorn
+python-multipart

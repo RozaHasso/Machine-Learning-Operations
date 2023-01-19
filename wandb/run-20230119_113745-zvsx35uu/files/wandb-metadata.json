@@ -1,0 +1,42 @@
+{
+    "os": "macOS-10.16-x86_64-i386-64bit",
+    "python": "3.10.8",
+    "heartbeatAt": "2023-01-19T10:37:46.848619",
+    "startedAt": "2023-01-19T10:37:45.881476",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/Users/abdulrahman/Documents/DTU/mlops/Machine-Learning-Operations/src/models/train_model.py",
+    "codePath": "src/models/train_model.py",
+    "git": {
+        "remote": "git@github.com:RozaHasso/Machine-Learning-Operations.git",
+        "commit": "5f35962b5d15b20e2114389676271bb924f5ca9d"
+    },
+    "email": "abdulrahman.ramdan@outlook.com",
+    "root": "/Users/abdulrahman/Documents/DTU/mlops/Machine-Learning-Operations",
+    "host": "abdulrahmansmbp.students.clients.local",
+    "username": "abdulrahman",
+    "executable": "/Users/abdulrahman/opt/anaconda3/envs/mlop_project_env/bin/python",
+    "cpu_count": 8,
+    "cpu_count_logical": 8,
+    "cpu_freq": {
+        "current": 2400,
+        "min": 2400,
+        "max": 2400
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2400,
+            "min": 2400,
+            "max": 2400
+        }
+    ],
+    "disk": {
+        "total": 228.27386474609375,
+        "used": 20.826148986816406
+    },
+    "memory": {
+        "total": 16.0
+    }
+}
