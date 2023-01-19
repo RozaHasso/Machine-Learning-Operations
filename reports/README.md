@@ -403,7 +403,8 @@ We did not manage to implement monitoring. One concern for machine learning is d
 >
 > Answer:
 
---- question 25 fill here ---
+The figure below shows the architecture of the setup. We have a developer input. When local changes are pushed to github, Github actions will run our test setup. Then a GCP trigger will start the cloud setup, which will build a docker file for training, train the model, save it in a GCP bucket and deploy it with fast.api. An end user can then query the model through fast.api, to get predictions.
+[Architecture](figures/architecture.png)
 
 ### Question 26
 
@@ -417,7 +418,7 @@ We did not manage to implement monitoring. One concern for machine learning is d
 >
 > Answer:
 
---- question 26 fill here ---
+One challenge was making sure that all scripts were continuing to function as intended after new features were implemented. Having a solid testing environment set up at the beginning could potentially have solved many of these issues. Another challenge was whenever the code had to be executed in different environments - from docker containers or from the cloud, and solving any unforeseen issues that did not appear on a local build.
 
 ### Question 27
 
