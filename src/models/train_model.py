@@ -1,5 +1,5 @@
 from model import init_model
-from predict_model import evaluate
+from test_model import evaluate
 
 import torch
 from torch.utils.data import DataLoader
