@@ -1,0 +1,50 @@
+{
+    "os": "Windows-10-10.0.22621-SP0",
+    "python": "3.10.9",
+    "heartbeatAt": "2023-01-19T13:08:35.241112",
+    "startedAt": "2023-01-19T13:08:34.275936",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "C:\\Users\\Cristina Ailoaei\\Source\\Repos\\Machine-Learning-Operations\\src\\models\\train_model.py",
+    "codePath": "src\\models\\train_model.py",
+    "git": {
+        "remote": "https://github.com/RozaHasso/Machine-Learning-Operations.git",
+        "commit": "b7f64a5c519ffbd3c3b41b0637fd920e29e6b275"
+    },
+    "email": "ailoaeicristina@yahoo.com",
+    "root": "C:/Users/Cristina Ailoaei/Source/Repos/Machine-Learning-Operations",
+    "host": "DESKTOP-CRISTINA",
+    "username": "Cristina Ailoaei",
+    "executable": "C:\\Users\\Cristina Ailoaei\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\\python.exe",
+    "cpu_count": 8,
+    "cpu_count_logical": 16,
+    "cpu_freq": {
+        "current": 2566.0,
+        "min": 0.0,
+        "max": 3201.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2566.0,
+            "min": 0.0,
+            "max": 3201.0
+        }
+    ],
+    "disk": {
+        "total": 476.22069931030273,
+        "used": 207.6609115600586
+    },
+    "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+            "memory_total": 4294967296
+        }
+    ],
+    "memory": {
+        "total": 13.692329406738281
+    }
+}
