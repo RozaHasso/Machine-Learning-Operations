@@ -1,85 +1,26 @@
 # -*- coding: utf-8 -*-
 import logging
 import os
-import shutil
-import numpy as np
 import torch
 import torchvision
 from torchvision import transforms
-from skimage.transform import resize
-import imageio
-from skimage.color import rgb2gray
+
 import click
-from torch.utils.data import Dataset
 
 
-class ImgDataset(Dataset):
-    def __init__(self, train:bool, input_filepath: str, output_filepath) -> None:
-        self.train = train
-        self.work_dir = os.getcwd()
-        self.input_filepath = input_filepath
-        self.output_filepath = output_filepath
-        
-        if self.output_filepath:  # try loading from proprocessed
-            try:
-                self.load_preprocessed()
-                print("Loaded from pre-processed files")
-                return
-            except ValueError:  # not created yet, we create instead
-                pass
-        split = "train" if self.train else "test"
+def process_data(input_filepath, output_filepath):
+    normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                 std=[0.229, 0.224, 0.225])
 
-        cats_dir_path = f"{input_filepath}/{split}/cats"
-        dogs_dir_path = f"{input_filepath}/{split}/dogs"
-        cats_filelist = os.listdir(cats_dir_path)
-        dogs_filelist = os.listdir(dogs_dir_path)
-        data=[]
-        targets=[]
-        image_size=(28,28)
-        for fname in cats_filelist:
-            gray_img= rgb2gray(imageio.imread(f"{cats_dir_path}/{fname}"))
-            img = resize(gray_img, output_shape=image_size, mode='reflect', anti_aliasing=True)
-            data.append(img) 
-            targets.append(self.get_label_from_fname(fname))
-        for fname in dogs_filelist:
-            img = imageio.imread(f"{dogs_dir_path}/{fname}")
-            if img.ndim == 3:
-                img= rgb2gray(imageio.imread(f"{dogs_dir_path}/{fname}"))
-            img = resize(img, output_shape=image_size, mode='reflect', anti_aliasing=True)
-            data.append(img) 
-            targets.append(self.get_label_from_fname(fname))
-
-        self.data=torch.Tensor(data).reshape(-1, 1, image_size[0], image_size[1])
-        self.targets=torch.LongTensor(targets)
-        print(self.data.shape)
-        if self.output_filepath:
-            self.save_preprocessed()
-
-    def get_label_from_fname(self, fname):
-        if fname.split("_")[0] == 'cat':
-            return 0
-        else : 
-            return 1
-        
-
-    def load_preprocessed(self):
-        split = "train" if self.train else "test"
-        try:
-            self.data, self.targets = torch.load(
-                f"{self.output_filepath}/{split}_processed.pt")
-        except:
-            raise ValueError("No preprocessed files found")
-    
-    def save_preprocessed(self): 
-        split = "train" if self.train else "test"
-        torch.save([self.data, self.targets],
-                   f"{self.output_filepath}/{split}_processed.pt")
-    
-    def __len__(self) -> int:
-        return self.targets.numel()
-
-    def __getitem__(self, idx: int):
-        return self.data[idx].float(), self.targets[idx]
+    train_set = torchvision.datasets.ImageFolder("./data/raw/train", transform =  transforms.Compose(
+                                                [transforms.Resize((224,224)), transforms.ToTensor(),
+                                                normalize])
+                                                )
+    test_set = torchvision.datasets.ImageFolder("./data/raw/test", transform =  transforms.Compose(
+                                                [transforms.Resize((224,224)), transforms.ToTensor(),
+                                                normalize])
+                                                )
+    return train_set, test_set
 
 @click.command()
 @click.argument("input_filepath", type=click.Path(exists=True))
@@ -90,10 +31,12 @@ def main(input_filepath: str, output_filepath: str) -> None:
     """
     logger = logging.getLogger(__name__)
     logger.info("making final data set from raw data")
-
+    train_set, test_set = process_data(input_filepath, output_filepath)
+    torch.save(train_set, os.path.join(output_filepath,"train_dataset"))
+    torch.save(test_set, os.path.join(output_filepath,"test_dataset"))
+    
 
 if __name__ == "__main__":
     log_fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     logging.basicConfig(level=logging.INFO, format=log_fmt)
     main()
-
