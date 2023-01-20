@@ -414,7 +414,7 @@ The summed amount of credits used in the project is 74 for 5 members.
 > Answer:
 
 The figure below shows desired the architecture of the setup. When local changes are pushed to github, Github actions will run our test setup. Then a GCP trigger will start the cloud setup, which will build a docker file for training, train the model and save it. The trained model can be deployed with FastAPI, but we have yet to implement automatic deployment from the cloud to FastAPI, but that would complete the pipeline. An end user can then query a locally stored model through fast.api, to get predictions.
-[Architecture](figures/architecture.png)
+![Architecture](figures/architecture.png)
 
 ### Question 26
 
