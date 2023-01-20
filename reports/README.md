@@ -326,7 +326,7 @@ Debugging was dependent on each group member's preferences. Some used print stat
 >
 > Answer:
 
---- question 19 fill here ---
+![cloud_storage](figures/cloud_storage.jpg)
 
 ### Question 20
 
@@ -335,7 +335,8 @@ Debugging was dependent on each group member's preferences. Some used print stat
 >
 > Answer:
 
---- question 20 fill here ---
+![cloud_storage](figures/container_registry.jpg)
+
 
 ### Question 21
 
@@ -344,7 +345,7 @@ Debugging was dependent on each group member's preferences. Some used print stat
 >
 > Answer:
 
---- question 21 fill here ---
+![cloud_storage](figures/cloud_build.jpg)
 
 ### Question 22
 
