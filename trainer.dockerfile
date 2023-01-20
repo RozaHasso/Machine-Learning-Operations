@@ -9,8 +9,8 @@ RUN apt update && \
 COPY requirements.txt requirements.txt
 COPY setup.py setup.py
 COPY src/ src/
+COPY models/ models/
 COPY data.dvc data.dvc
-COPY vast-flight-374515-36a0dca1ba5d.json vast-flight-374515-36a0dca1ba5d.json
 
 WORKDIR /
 RUN pip install -r requirements.txt --no-cache-dir

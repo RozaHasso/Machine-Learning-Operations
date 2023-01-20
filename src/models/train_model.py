@@ -6,7 +6,6 @@ from torch.utils.data import DataLoader
 import wandb
 
 import argparse
-from google.cloud import storage
 
 def train(lr,epochs,batch_size, optimizer, pretrain=False):
     torch.manual_seed(123)
@@ -55,12 +54,7 @@ def train(lr,epochs,batch_size, optimizer, pretrain=False):
                             "accuracy": accuracy,
                             "evaluation loss": eval_loss})
 
-    client = storage.Client.from_service_account_json("vast-flight-374515-36a0dca1ba5d.json")
-    bucket = client.get_bucket("trained-models-bucket")
-    blob = bucket.blob("trained-model")
-
-    with blob.open("wb", ignore_flush=True) as f:
-        torch.save(model.state_dict(), f)
+    torch.save(model.state_dict(), 'models/trained_model.pth')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
