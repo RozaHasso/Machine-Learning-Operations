@@ -220,7 +220,7 @@ https://github.com/RozaHasso/Machine-Learning-Operations/actions
 >
 > Answer:
 
-We used a simple argparser for the training script which worked in the following way: python train_model.py -lr 1e-4 -bs 16 -e 5 -o Adam -pt True. The arguments are explained in the README.MD in the root foolder.
+We used a simple argparser for the training script which worked in the following way: python train_model.py -lr 1e-4 -bs 16 -e 5 -o Adam -pt True. The arguments are explained in the README.MD in the root folder.
 
 ### Question 13
 
@@ -448,5 +448,5 @@ One challenge was making sure that all scripts were continuing to function as in
 - s213470, Jakob Ryttergaard Poulsen: cookie cutter, model, training script, evaluation script, docker training file, wandb, hydra, dvc
 - s213804, Cristina Ailoaei: Unit testing, CI, Setting up cloud, Compute Engine, Cloud storage, Container registry, training the model on cloud
 - s220425, Teakosheen Joulak: Unit testing, CI, Setting up cloud, Compute Engine, Cloud storage, Container registry, training the model on cloud
-- s213558, Roza Hasso: Unit testing, CI, Setting up cloud, Compute Engine, Cloud storage, Container registry, training the model on cloud
+- s213558, Roza Ibrahim Hasso: Unit testing, CI, Setting up cloud, Compute Engine, Cloud storage, Container registry, training the model on cloud
 - s204476, Abdulrahman Ramadan: data preparation and processing, cloud deployment
