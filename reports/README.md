@@ -131,7 +131,7 @@ We did not focus on it for a project of this time-scale, but for larger projects
 >
 > Answer:
 
---- question 7 fill here ---
+We have implemented testing using the 'pytest' library. The data was tested on 2 unit tests, which check the shape of the data and the format.
 
 ### Question 8
 
@@ -146,7 +146,9 @@ We did not focus on it for a project of this time-scale, but for larger projects
 >
 > Answer:
 
---- question 8 fill here ---
+We have used the 'coverage' library to calculate the total code coverage, which is 100%. However, we think this is a mistake which we cannot explain for now, since we are only testing the data and none of the model, training or evaluation.
+![code_coverage](figures/code_coverage.jpg) 
+
 
 ### Question 9
 
@@ -161,7 +163,7 @@ We did not focus on it for a project of this time-scale, but for larger projects
 >
 > Answer:
 
-Every time a new feature was being built, it was made on a branch. We had many branches in this project; *model, data_processing, docker, tests, etc.*. When a feature was completed and tested, we did pull requests and merged into main. Frequent commits made it easier to find out when a feature was not working as expected on main, specifically when multiple branches were merged.
+Every time a new feature was being built, it was made on a branch. We had many branches in this project; *model, data_processing, docker, tests, etc.*. When a feature was completed and tested, we did pull requests in order to merge into main. Frequent commits made it easier to find out when a feature was not working as expected on main, specifically when multiple branches were merged.
 
 ### Question 10
 
@@ -176,7 +178,7 @@ Every time a new feature was being built, it was made on a branch. We had many b
 >
 > Answer:
 
-We used dvc to be able to pull the data from another storage than GitHub. We used dvc also to have multiple versions of the dataset, one version with only raw data, one with processed data also and one version with an expanded dataset of 25k additional images.
+We used dvc to be able to pull the data from another storage than GitHub, such as Google Drive and Google Cloud Storage. We used dvc also to have multiple versions of the dataset, one version with only raw data, one with processed data also and one version with an expanded dataset of 25k additional images.
 
 ### Question 11
 
@@ -193,12 +195,12 @@ We used dvc to be able to pull the data from another storage than GitHub. We use
 > Answer:
   
 For continuous integration we are running unit testing in pytest framework which allows us to automatically build, test and deploy code changes as soon as they are pushed to a GitHub repository.
-This can be done through GitHub actions, which is a popular CI/CD tool that can be used to automate this process. A workflow was created through a yml file, to define the steps of building, testing and deploying. These workflows can be triggered by push and pull requests in our project.
-We have applied this workflow to be run on the main and the testing branch.
+This can be done through GitHub actions, which is a popular CI/CD tool that can be used to automate this process. A workflow was created through a .yml file, to define the steps of building, testing and deploying. These workflows can be triggered by push and pull requests in our project.
+We have applied this workflow to be run on the main and the testing branch, but other branches can be added.
 In addition to that Python version 3.8 was selected.
 We used two different operating systems (windows and WSL Ubuntu).
  
-Then when a push or a pull request is executed, the GitHUb workflow can be seen on the online GitHub repository. Here is a link to our GitHub workflow on a branch called "testing"
+Then, when a push or a pull request is executed, the GitHUb workflow can be seen on the online GitHub repository. Here is a link to our GitHub workflow on a branch called "testing"
 https://github.com/RozaHasso/Machine-Learning-Operations/actions
 
 ## Running code and tracking experiments
@@ -301,8 +303,8 @@ Debugging was dependent on each group member's preferences. Some used print stat
 > *We used the following two services: Engine and Bucket. Engine is used for... and Bucket is used for...*
 >
 > Answer:
-
---- question 17 fill here ---
+  
+  We have used Compute Engine for creating and hosting virtual machines and Cloud Storage for creating and hosting buckets. We have created a trigger on Cloud Build, which was possible to do by enabling the following services: Google Container Registry API and Google Cloud Build API. Furthermore, we have used the Vertex AI service to create custom jobs that start VMs, run the training and then shut down the VMs.
 
 ### Question 18
 
@@ -317,8 +319,8 @@ Debugging was dependent on each group member's preferences. Some used print stat
 >
 > Answer:
 
---- question 18 fill here ---
-
+We have mostly used this service during the exercise sessions. Regarding the project, we have used, as previously stated, the VERTEX AI service in order to take care of starting and shutting down VMs. The 'vertex-config.yaml' file in the root folder specifies the virtual machine type created, which is 'n1-highmem-2'.
+  
 ### Question 19
 
 > **Insert 1-2 images of your GCP bucket, such that we can see what data you have stored in it.**
@@ -361,7 +363,7 @@ Debugging was dependent on each group member's preferences. Some used print stat
 >
 > Answer:
 
---- question 22 fill here ---
+The model is deployed to the cloud using `Docker` and `Cloud Run`. To invoke the service an user would call `curl -X POST -F "file=@<FILE_NAME.jpg>" https://mlops-deploy-app-v2-cp55xkqzqa-ew.a.run.app/get/` to upload and image and get a prediction.
 
 ### Question 23
 
@@ -389,8 +391,8 @@ We did not manage to implement monitoring. One concern for machine learning is d
 > *costing the most was ... due to ...*
 >
 > Answer:
-
---- question 24 fill here ---
+  
+The summed amount of credits used in the project is 74 for 5 members.
 
 ## Overall discussion of project
 
@@ -411,7 +413,7 @@ We did not manage to implement monitoring. One concern for machine learning is d
 >
 > Answer:
 
-The figure below shows the architecture of the setup. We have a developer input. When local changes are pushed to github, Github actions will run our test setup. Then a GCP trigger will start the cloud setup, which will build a docker file for training, train the model, save it in a GCP bucket and deploy it with fast.api. An end user can then query the model through fast.api, to get predictions.
+The figure below shows desired the architecture of the setup. When local changes are pushed to github, Github actions will run our test setup. Then a GCP trigger will start the cloud setup, which will build a docker file for training, train the model and save it. The trained model can be deployed with FastAPI, but we have yet to implement automatic deployment from the cloud to FastAPI, but that would complete the pipeline. An end user can then query a locally stored model through fast.api, to get predictions.
 [Architecture](figures/architecture.png)
 
 ### Question 26
@@ -426,7 +428,7 @@ The figure below shows the architecture of the setup. We have a developer input.
 >
 > Answer:
 
-One challenge was making sure that all scripts were continuing to function as intended after new features were implemented. Having a solid testing environment set up at the beginning could potentially have solved many of these issues. Another challenge was whenever the code had to be executed in different environments - from docker containers or from the cloud, and solving any unforeseen issues that did not appear on a local build.
+One challenge was making sure that all scripts were continuing to function as intended after new features were implemented. Having a solid testing environment set up at the beginning could potentially have solved many of these issues. Another challenge was whenever the code had to be executed in different environments - from docker containers or from the cloud, and solving any unforeseen issues that did not appear on a local build. Finally, there is the security challenge. We have tried to push our trained model into a GCP Bucket, but that required our service account key to be exposed. Therefore, we have abandoned this idea and this is why we have a gap in the pipeline, since the deployment is not automatic and relies on a locally stored model.
 
 ### Question 27
 
@@ -444,7 +446,7 @@ One challenge was making sure that all scripts were continuing to function as in
 > Answer:
 
 - s213470, Jakob Ryttergaard Poulsen: cookie cutter, model, training script, evaluation script, docker training file, wandb, hydra, dvc
-- s213804,
-- s220425,
-- s213558,
-- s204476, 
+- s213804, Cristina Ailoaei: Unit testing, CI, Setting up cloud, Compute Engine, Cloud storage, Container registry, training the model on cloud
+- s220425, Teakosheen Joulak: Unit testing, CI, Setting up cloud, Compute Engine, Cloud storage, Container registry, training the model on cloud
+- s213558, Roza Hasso: Unit testing, CI, Setting up cloud, Compute Engine, Cloud storage, Container registry, training the model on cloud
+- s204476, Abdulrahman Ramadan: data preparation and processing, cloud deployment
