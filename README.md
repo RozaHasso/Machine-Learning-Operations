@@ -1,4 +1,6 @@
 # Image classifier for detecting cats and dogs
+## Pipeline
+[architecture](reports/figures/architecture.png)
 
 ## Dataset
 
