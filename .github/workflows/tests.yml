@@ -14,14 +14,6 @@ jobs:
     strategy: 
         matrix: 
           os: [ubuntu-latest, windows-latest]
-          
-
-
-    
-    
-             
-    
-
     steps:
     - name: Checkouts
       uses: actions/checkout@v2
@@ -34,6 +26,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install -r requirements_tests.txt
+        pip install dvc 'dvc[gs]'
+        dvc remote add -d myremote gs://cats-and-dogs-dtumlops/
+        dvc pull
     - name: Test with pytest
       run: |
         pip install pytest
